@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<META http-equiv="Content-Style-Type" content="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=0.75">
+<link rel="icon" type="image/x-icon" sizes="32x32" href="/static/cv_db/favicon.ico">
+
+<script type="text/javascript" src="/static/cv_db/js/jquery.js"></script>
+<script type="text/javascript">
+var do_alert;
+
+$(document).ready( function() {
+try {
+
+do_alert = function(s_in) {
+	s_in = String(s_in).replace("\n", "<br />");
+	$("#div_alert").show();
+	//document.getElementById("div_alert").innerHTML = s_in;
+	$("#div_alert").html(s_in);
+}//end of do_alert function
+
+$.fn.redraw =function(){
+	$(this).each(function(){var redraw =this.offsetHeight;});
+};//end of $.fn.redraw function
+
+var s_server_url = "/cv_db/";
+$.each($("ul.nav").find("a"), function(ix, a) {
+    if (s_server_url.endsWith($(a).attr("href"))) { $(a).attr("aria-current", "true"); } else { $(a).attr("aria-current", ""); }
+});// end of .each on nav links
+// alert([s_url, s_server_url]);
+
+var s_msg = "";
+
+
+
+if (String(s_msg).length>0) {
+    window.setTimeout( function() {
+    $("#div_alert").toggleClass("warning");
+    do_alert(s_msg);
+    }, 300);
+}
+
+} catch(e) {
+    var s_err = String(e.name) + "\nmessage:" + String(e.message);
+    s_err = (typeof(e.lineNumber)!="undefined") ? s_err + "\nline:" + String(e.lineNumber) : s_err;
+    alert("Error! " + s_err);
+}//end of catch
+});//end of document ready
+</script>
+
+<title>C.V. Database - Landing page</title>
+<link type="text/css" rel="stylesheet" href="static/cv_db/css/styles.css" />
+<link type="text/css" rel="stylesheet" href="static/cv_db/css/alteram/styles_1.css" />
+<link type="text/css" rel="stylesheet" href="static/cv_db/css/alteram/styles_2.css" />
+
+<style>
+.label {
+font-weight: bold;
+}
+# tbl_filters {
+border: 1px solid transparent;
+}
+#tbl_filters tr {
+vertical-align: top;
+}
+#tbl_filters th, #tbl_filters td {
+text-align: left;
+color: dark-blue;
+}
+div.paging {
+color: dark-blue;
+font-size: smaller;
+}
+</style>
+
+</head>
+<body>
+
+
+<header>
+<div class="header-container">
+<div class="logo-area"></div>
+<nav>
+<ul class="nav" role="navigation">
+
+<li><a href="/cv_db/">Landing page</a></li>
+
+<li><a href="/cv_db/qualifications/">Qualifications</a></li>
+<li><a href="/cv_db/roles/">Positions | Roles</a></li>
+<li><a href="/cv_db/users/">Access User Profiles</a></li>
+<li><a href="/cv_db/tenders/">Tenders</a></li>
+
+
+<li><a href="/cv_db/capture_record/">Capture record</a></li>
+
+<li><a href="/cv_db/auth/logout">Logout</a></li>
+
+</ul>
+</nav>
+</div><!-- end of div.header-container -->
+</header>
+
+<main>
+<div class="background-container"></div>
+<div class="content-container">
+<div id="div_alert" style="text-align: center;" aria-live="assertive">&nbsp;</div>
+
+
+<span class="title"><h2>Landing page</h2></span>
+<div class="content-container content">
+<div id="div_filter">
+<h3>Filtering/Searching options</h3>
+<form action="/cv_db/" method="post" id="frm_filters">
+<input id="csrf_token" name="csrf_token" type="hidden" value="IjljYWNkNzUxZTFkODg2ZDczNDdkZTA5MzNhM2Q2YmE1YTkyMTg4YTYi.aCs-vw.AfDGiQvBz09rTv99gsa3eDKKJM0">
+<input id="hid_page" name="hid_page" type="hidden" value="1">
+<div>
+<button type="submit" name="btn_filter" value="Apply Filters"><img src="/static/cv_db/action_icons/search.svg" alt="apply filters" aria-label="apply filters" width="16"></button><button type="button" id="btn_clear_filter" name="btn_clear_filter" value="Clear Filters"><img src="/static/cv_db/action_icons/delete.svg" alt="remove filters" aria-label="remove filters" width="16"></button><br>
+<span style="font-size: smaller;"><input id="chk_case_sensitive" name="chk_case_sensitive" type="checkbox" value="y">&nbsp;<label for="chk_case_sensitive">(case-sensitivity for string values)</label></span>
+</div>
+<table id="tbl_filters">
+<tr><td>
+<table id="tbl_filter1" class="tbl_filtering">
+<thead>
+<tr>
+<th>Position</th><th>Names</th><th>Surnames</th><th>I.D. or Passport number</th><th>Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><label for="sel_role_department">Department</label>&nbsp;<select id="sel_role_department" name="sel_role_department"><option selected value="0">---</option><option value="7">Administration</option><option value="6">Finance and Accounting </option><option value="5">Human Resources (HR) </option><option value="1">IT and Technology</option><option value="2">Sales and Marketing</option></select><br>
+<label for="sel_role">Role</label>&nbsp;<select id="sel_role" name="sel_role"><option selected value="0">---</option></select></td>
+<td><label for="txt_name">Name fields</label>&nbsp;<input id="txt_name" maxlength="50" minlength="0" name="txt_name" type="text" value=""></td><td><label for="txt_surname">Surname</label>&nbsp;<input id="txt_surname" maxlength="50" minlength="0" name="txt_surname" type="text" value=""></td><td><label for="txt_id_number">I.D./Passport number</label>&nbsp;<input id="txt_id_number" maxlength="50" minlength="0" name="txt_id_number" type="text" value=""></td><td><label for="sel_language">Language</label>&nbsp;<select id="sel_language" name="sel_language"><option selected value="">---</option><option value="af">Afrikaans</option><option value="en">English</option><option value="nr">isiNdebele</option><option value="xh">isiXhosa</option><option value="zu">isiZulu</option><option value="nso">Sepedi</option><option value="st">Sesotho</option><option value="tn">Setswana</option><option value="ss">siSwati</option><option value="sfs">South African Sign Language</option><option value="ve">Tshivenda</option><option value="ts">Xitsonga</option></select></td>
+</tr>
+</tbody>
+</table><!-- end of tbl_filter1 -->
+</td></tr>
+<tr><td>
+<table id="tbl_filter2" class="tbl_filtering">
+<thead>
+<tr>
+<th>SAP K-Level</th><th>Qualification/Certification 1</th><th>Qualification/Certification 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><label for="sel_sap_k_level">SAP K Level</label>&nbsp;<select id="sel_sap_k_level" name="sel_sap_k_level"><option selected value="">---n/a---</option><option value="K1">K1</option><option value="K2">K2</option><option value="K3">K3</option><option value="K4">K4</option><option value="K5">K5</option><option value="K6">K6</option><option value="K7">K7</option><option value="K8">K8</option></select></td><td>
+<label for="sel_qualification_type_1">Qualification Type 1</label>&nbsp;<select id="sel_qualification_type_1" name="sel_qualification_type_1"><option selected value="0">---</option><option value="6">Bachelor&#39;s degree, Advanced Diplomas, Post Graduate Certificates (NQF 7)</option><option value="10">Doctoral degree (NQF 10)</option><option value="1">Higher Certificates and Advanced National Vocational Certificate (NQF 5)</option><option value="9">Honour’s Degree, Post Graduate Diploma, and Professional Qualifications(NQF 8)</option><option value="7">Master (NQF 9)</option><option value="5">National Diploma and Advanced Certificate (NQF 6)</option></select><br>
+<label for="sel_qualification_1">Qualification 1</label>&nbsp;<select id="sel_qualification_1" name="sel_qualification_1"><option selected value="0">---</option></select></td><td>
+<label for="sel_qualification_type_2">Qualification Type 2</label>&nbsp;<select id="sel_qualification_type_2" name="sel_qualification_type_2"><option selected value="0">---</option><option value="6">Bachelor&#39;s degree, Advanced Diplomas, Post Graduate Certificates (NQF 7)</option><option value="10">Doctoral degree (NQF 10)</option><option value="1">Higher Certificates and Advanced National Vocational Certificate (NQF 5)</option><option value="9">Honour’s Degree, Post Graduate Diploma, and Professional Qualifications(NQF 8)</option><option value="7">Master (NQF 9)</option><option value="5">National Diploma and Advanced Certificate (NQF 6)</option></select><br>
+<label for="sel_qualification_2">Qualification 2</label>&nbsp;<select id="sel_qualification_2" name="sel_qualification_2"><option selected value="0">---</option></select></td>
+</tr>
+</tbody>
+</table><!-- end of tbl_filter2 -->
+</td></tr>
+</table><!-- tbl_filters -->
+</div><!-- end of div_filter -->
+
+<h3>Records</h3>
+<div class="table-container">
+<table class="data-table" id="tbl_records">
+<thead>
+<tr>
+<th>Surname</th><th>First name</th><th>Years experience</th><th>Contact number</th><th>E-mail</th><th>Qualifications</th><th style="font-size: smaller;">[actions]</th>
+</tr>
+</thead>
+
+<tr>
+<td>chabane</td><td>Tsakanie</td><td>3</td><td>0000000</td><td>tsakani.chavani@alteram.co.za</td><td>
+
+<ul>
+
+<li>
+Bachelor&#39;s degree, Advanced Diplomas, Post Graduate Certificates (NQF 7) - Computer Science - 2025-04-24
+</li>
+
+</ul>
+
+</td>
+<td>
+<ul>
+<li><a href="#15" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
+
+<li><a href="/cv_db/capture_record/15/"><img src="/static/cv_db/action_icons/edit.svg" alt="edit" aria-label="edit" width="16"></a></li>
+
+</ul>
+</td>
+</tr>
+
+<tr>
+<td>Chavani</td><td>Tsakani</td><td>6</td><td>0728165319</td><td>gertrudetsakani90@gmail.com</td><td>
+
+<ul>
+
+<li>
+Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certificate in something - 2025-04-23
+</li>
+
+</ul>
+
+</td>
+<td>
+<ul>
+<li><a href="#13" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
+
+<li><a href="/cv_db/capture_record/13/"><img src="/static/cv_db/action_icons/edit.svg" alt="edit" aria-label="edit" width="16"></a></li>
+
+</ul>
+</td>
+</tr>
+
+<tr>
+<td>Khwalo</td><td>Bongeka</td><td>8</td><td>00000000000</td><td>bongeka.khwalo@alteram.co.za</td><td>
+
+<ul>
+
+<li>
+Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certificate in programming - 2025-04-21
+</li>
+
+</ul>
+
+</td>
+<td>
+<ul>
+<li><a href="#16" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
+
+<li><a href="/cv_db/capture_record/16/"><img src="/static/cv_db/action_icons/edit.svg" alt="edit" aria-label="edit" width="16"></a></li>
+
+</ul>
+</td>
+</tr>
+
+<tr>
+<td>Lit</td><td>Tshiamo</td><td>2</td><td>0694963501</td><td>Lit@gmail.com</td><td>
+
+&nbsp;
+
+</td>
+<td>
+<ul>
+<li><a href="#14" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
+
+<li><a href="/cv_db/capture_record/14/"><img src="/static/cv_db/action_icons/edit.svg" alt="edit" aria-label="edit" width="16"></a></li>
+
+</ul>
+</td>
+</tr>
+
+<tr>
+<td>Piper</td><td>Peter</td><td>10</td><td>555-1234</td><td>peter@piper.com</td><td>
+
+&nbsp;
+
+</td>
+<td>
+<ul>
+<li><a href="#11" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
+
+<li><a href="/cv_db/capture_record/11/"><img src="/static/cv_db/action_icons/edit.svg" alt="edit" aria-label="edit" width="16"></a></li>
+
+</ul>
+</td>
+</tr>
+
+<tr>
+<td>Templar</td><td>Simon</td><td>0</td><td>998-1459</td><td>john@lecarre.com</td><td>
+
+&nbsp;
+
+</td>
+<td>
+<ul>
+<li><a href="#12" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
+
+<li><a href="/cv_db/capture_record/12/"><img src="/static/cv_db/action_icons/edit.svg" alt="edit" aria-label="edit" width="16"></a></li>
+
+</ul>
+</td>
+</tr>
+
+<tr>
+<td>Wilco</td><td>Roger</td><td>10</td><td>555-1234</td><td>roger@spacequest.com</td><td>
+
+<ul>
+
+<li>
+Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certificate in programming - 1970-01-01
+</li>
+
+<li>
+Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certificate in something - 2025-01-01
+</li>
+
+</ul>
+
+</td>
+<td>
+<ul>
+<li><a href="#10" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
+
+<li><a href="/cv_db/capture_record/10/"><img src="/static/cv_db/action_icons/edit.svg" alt="edit" aria-label="edit" width="16"></a></li>
+
+</ul>
+</td>
+</tr>
+
+</table><!-- end of tbl_records -->
+</div><!-- end of div.table-container -->
+<div class="paging">
+<div>Paging...</div>
+
+
+
+
+
+<!-- current_num --><span class="current-page-number">1</span>&nbsp;&nbsp;
+
+
+
+
+
+</div><!-- end of div.paging -->
+
+</div><!-- end of div.content -->
+
+<script type="text/javascript" src="/static/cv_db/js/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/cv_db/js/jquery-ui.css" />
+<script type="text/javascript">
+$(document).ready( function() {
+
+$.fn.redraw =function(){
+	$(this).each(function(){var redraw =this.offsetHeight;});
+};//end of $.fn.redraw function
+
+
+var s_dlg_details = "";
+$("#dlg_details").dialog({autoOpen: false,
+width: "auto",
+height: "auto",
+modal: true,
+buttons: {Cancel: function() {
+$("#dlg_details").dialog("close");
+}},
+close: function(event, ui) {
+$("#dlg_details").html(s_dlg_details);
+$("#dlg_details").redraw();
+}//end of close event
+});//end of dlg_details init
+s_dlg_details = $("#dlg_details").html();
+
+
+
+});//end of document ready
+</script>
+
+<div id="dlg_details" aria-labeledby="spn_details">
+<span id="spn_details">Record details</span><br>
+<a href="#" id="a_full_screen" style="font-size: smaller;">(view full-screen)</a><br>
+<div id="div_details">
+<h4>Details</h4>
+<ul id="ul_details"></ul>
+<span id="spn_languages">
+<h4>Languages</h4>
+<ul id="ul_languages"></ul>
+</span>
+<span id="spn_qualifications">
+<h4>Qualifications</h4>
+<ul id="ul_qualifications"></ul>
+</span>
+</div><!-- end of div_details -->
+<div id="div_uploads">
+<h4>Uploads</h4>
+<ul id="ul_uploads"></ul>
+</div>
+<span id="spn_tenders">
+<h4>Prior Tenders</h4>
+<ul id="ul_tenders"></ul>
+</span>
+</div><!-- end of dlg_details -->
+<script type="text/javascript">
+$(document).ready( function() {
+
+try {
+
+var s_dlg_details = $("#dlg_details").html();
+
+$("#sel_role_department").change( function(event) {
+    var s_id = String($(this).val());
+    // roles_list(i_department_id)
+    // id, v_role_name
+    $("#sel_role").empty();
+    var s_html = "<option value=\"0\" selected>---</option>\n";
+    var s_url = "/cv_db/roles_list/99999/".replace("99999", s_id);
+    $.get(s_url, function(o_roles) {
+        if (typeof(o_roles)=="object") {
+            $.each(o_roles, function(ix, o_role) {
+                s_html = s_html + "<option value=\"" + String(o_role.id) + "\">" + String(o_role.v_role_name) + "</option>\n";
+            });// end of .each against o_roles
+            $("#sel_role").html(s_html);
+            $("#sel_role").redraw();
+        }// end of typeof check against o_roles
+    });// end of .get
+    do_alert("Roles listing updated");
+});// end of sel_department change event
+
+$("#sel_qualification_type_1").change( function(event) {
+    var s_id = String($(this).val());
+    // qualifications_list(i_type_id)
+    // id, v_qualification_name
+    $("#sel_qualification_1").empty();
+    var s_html = "<option value=\"0\" selected>---</option>\n";
+    var s_url = "/cv_db/qualifications_list/99999/".replace("99999", s_id);
+    $.get(s_url, function(o_qualifications) {
+        if (typeof(o_qualifications)=="object") {
+            $.each(o_qualifications, function(ix, o_qualification) {
+                s_html = s_html + "<option value=\"" + String(o_qualification.id) + "\">" + String(o_qualification.v_qualification_name) + "</option>\n";
+            });// end of .each against o_qualifications
+            $("#sel_qualification_1").html(s_html);
+            $("#sel_qualification_1").redraw();
+        }// end of typeof check against o_qualifications
+    });// end of .get
+    do_alert("Roles listing 1 updated");
+});// end of sel_qualification_type_1 change event
+
+$("#sel_qualification_type_2").change( function(event) {
+    var s_id = String($(this).val());
+    // qualifications_list(i_type_id)
+    // // id, v_qualification_name
+    $("#sel_qualification_2").empty();
+    var s_html = "<option value=\"0\" selected>---</option>\n";
+    var s_url = "/cv_db/qualifications_list/99999/".replace("99999", s_id);
+    $.get(s_url, function(o_qualifications) {
+        if (typeof(o_qualifications)=="object") {
+            $.each(o_qualifications, function(ix, o_qualification) {
+                s_html = s_html + "<option value=\"" + String(o_qualification.id) + "\">" + String(o_qualification.v_qualification_name) + "</option>\n";
+            });// end of .each against o_qualifications
+            $("#sel_qualification_2").html(s_html);
+            $("#sel_qualification_2").redraw();
+        }// end of typeof check against o_qualifications
+    });// end of .get
+    do_alert("Roles listing 2 updated");
+});// end of sel_qualification_type_2 change event
+
+$("#btn_clear_filter").click( function(event) {
+    event.preventDefault();
+    // checkbox
+    $("#chk_case_sensitive").prop("checked", false);
+    // text boxes
+    $.each(["#txt_name", "#txt_surname", "#txt_id_number"], function(ix, ss) { $(ss).val(""); });
+    // dependant selects first
+    $.each(["#sel_role", "#sel_qualification_1", "#sel_qualification_2"], function(ix, ss) { $(ss).prop("selectedIndex", 0); });
+    // categorical selects
+    $.each(["#sel_role_department", "#sel_language", "#sel_sap_k_level", "#sel_qualification_type_1", "#sel_qualification_type_2"], function(ix, ss) { $(ss).prop("selectedIndex", 0); });
+    document.getElementById("frm_filters").submit();
+});// end of btn_clear_filter click event
+
+$(".a_view_details").click( function(event) {
+try {
+    event.preventDefault();
+    $("#dlg_details").html(s_dlg_details);
+    $("#dlg_details").redraw();
+    var s_id = String($(this).attr("href")).replace("#", "");
+    var s_url = "/cv_db/record_details/99999/".replace("99999", s_id);
+    $.get(s_url, function(o_data) {
+        if (typeof(o_data)=="object") {
+            var s_html = "";
+            if (typeof(o_data.record)=="object") {
+                s_html = "<li><span class=\"label\">Surname:</span>&nbsp;" + String(o_data.record["v_surname"]) + "</li></li>\n";
+                var s_names = [o_data.record["v_name_1"], o_data.record["v_name_2"], o_data.record["v_name_3"]].join(" ").trim();
+                s_html = s_html + "<li><span class=\"label\">Name(s):</span>&nbsp;" + s_names + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">I.D./Passport Number:</label>&nbsp;" + String(o_data.record["v_id_number"]) + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">Gender:</label>&nbsp;" + String(o_data.record["c_gender"]).toUpperCase() + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">Years Experience:</label>&nbsp;" + String(o_data.record["si_years_experience"]) + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">SAP K-Level:</label>&nbsp;" + String(o_data.record["v_sap_k_level"]) + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">Contact Number:</label>&nbsp;" + String(o_data.record["v_contact_number"]) + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">E-Mail Address:</label>&nbsp;" + String(o_data.record["v_email"]) + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">Employment Department/Division:</label>&nbsp;" + String(o_data.record["v_department_name"]) + "</li>\n";
+                s_html = s_html + "<li><span class=\"label\">Employment Position/Role:</label>&nbsp;" + String(o_data.record["v_role_name"]) + "</li>\n";
+                $("#ul_details").append(s_html);
+            }// end of typeof check against basic details
+            // languagess
+            s_html = "";
+            if (typeof(o_data.languages)=="object") {
+            if (o_data.languages.length>0) {
+                $.each(o_data.languages, function(ix, l) {
+                    s_html = s_html + "<li><ul>";
+                    s_html = s_html + "<li><span class=\"label\">Language:</span>&nbsp;" + String(l.v_language_name) + " (" + String(l.v_language_abbreviation) + ")</li>\n";
+                    s_html = s_html + "<li><span class=\"label\">Level:</span>&nbsp;" + String(l.level) + "</li>\n";
+                    s_html = s_html + "</ul></li>\n";
+                });// end of looping through languages
+                $("#ul_languages").append(s_html);
+            } else {
+                $("#spn_languages").hide();
+            }// end of .length check against languages
+            } else {
+                $("#spn_languages").hide();
+            }// end of typeof check against language data
+            // tenders
+            s_html = "";
+            if (typeof(o_data.tenders)=="object") {
+            if (o_data.tenders.length>0) {
+                $.each(o_data.tenders, function(ix, t) {
+                    s_html = s_html + "<li><span class=\"label\">Reference no.:</span>&nbsp;" + String(t.v_reference_number) + "</li>\n";
+                    s_html = s_html + "</ul>\n";
+                });// end of looping through tenders
+                $("#ul_tenders").append(s_html);
+            } else {
+                $("#spn_tenders").hide();
+            }// end of .length check against languages
+            } else {
+                $("#spn_tenders").hide();
+            }// end of typeof check against prior tender data
+            // qualifications
+            if (typeof(o_data.qualifications)=="object") {
+            if (o_data.qualifications.length>0) {
+                $.each(o_data.qualifications, function(ix, q) {
+                    s_html = s_html + "<li><ul>";
+                    s_html = s_html + "<li><span class=\"label\">Qualification Type:</span>&nbsp;" + String(q.v_qualification_type) + "</li>\n";
+                    s_html = s_html + "<li><span class=\"label\">Qualification Name:</span>&nbsp;" + String(q.v_qualification_name) + "</li>\n";
+                    s_html = s_html + "<li><span class=\"label\">Acquired Date:</span>&nbsp;" + String(q["d_acquired"]) + "</li>\n";
+                    s_html = s_html + "</ul></li>\n";
+                });// end of looping through qualifications
+                $("#ul_qualifications").append(s_html);
+            } else {
+                $("#spn_qualifications").hide();
+            }// end of .length check against qualifications
+            } else {
+                $("#spn_qualifications").hide();
+            }// end of typeof check against qualifications
+            if (typeof(o_data.uploads)=="object") {
+            if (o_data.uploads.length>0) {
+                // uploaded documents
+                s_html = "";
+                $.each(o_data.uploads, function(ix, u) {
+                    s_html = s_html + "<li><ul>";
+                    s_html = s_html + "<li><span class=\"label\">Document Type:</span>&nbsp;" + String(u.si_upload_type) + "</li>\n";
+                    s_url_download = "/cv_db/download_upload/99999/".replace("99999", String(u["id"]));
+                    s_url_view = "/cv_db/download_upload/99999/False/".replace("99999", String(u["id"]));
+                    s_html = s_html + "<li><span class=\"label\">File Name:</span>&nbsp;<a href=\"" + s_url_download + "\" target=\"_blank\"> download - " + String(u["v_filename"]) + "</a>&nbsp;<a href=\"" + s_url_view + "\" target=\"_blank\"> view - " + String(u["v_filename"]) + "</a></li>\n";
+                    s_html = s_html + "<li><span class=\"label\">Description:</span>&nbsp;" + String(u["v_description"]) + "</li>\n";
+                    if (String(u["v_qualification_name"])!="null") { s_html = s_html + "<li><span class=\"label\">Matching Qualification:</span>&nbsp;" + String(u["v_qualification_name"]) + "</li>\n"; }
+                    s_html = s_html + "</ul></li>\n";
+                });// end of looping through uploads
+                $("#ul_uploads").append(s_html);
+            } else {
+                $("#div_uploads").hide();
+            }// end of length check against o_data.uploads
+            } else {
+                $("#div_uploads").hide();
+            }// end of typeof check against uploads
+            $("#dlg_details").redraw();
+            $("#dlg_details").dialog("open");
+        } else {
+            do_alert(String(o_data));
+        }// end of typeof check against o_data
+    });// end of .get
+} catch(e) {
+    var s_err = String(e.name) + "\nmessage:" + String(e.message);
+    s_err = (typeof(e.lineNumber)!="undefined") ? s_err + "\nline:" + String(e.lineNumber) : s_err;
+    alert("Error! " + s_err);
+}//end of catch
+});// end of .a_view_details click event
+
+function jump_page(i_page) {
+    i_page = (isNaN(i_page)) ? 1 : Number(i_page);
+    $("#hid_page").val(i_page);
+    document.getElementById("frm_filters").submit();
+}// end of jump_page function
+
+$(".a_page_number").click( function(event) {
+    event.preventDefault();
+    var s_page = String($(this).attr("href")).replace("#", "");
+    i_page = (isNaN(s_page)) ? 1 : Number(s_page);
+    jump_page(i_page);
+});// end of .a_page_number function
+
+$("#dlg_details").on("click", "#a_full_screen", function(event) {
+    event.preventDefault();
+try {
+    var s_html = "<!doctype html>\n<html lang=\"en\">\n<head>\n<title>C.V. details</title>\n</head>\n<body>\n<a href=\"#\" onclick=\"window.close();\">(close)</a><br>\n";
+    s_html = s_html + $("#div_details").html();
+    s_html = s_html + "</body>\n</html>";
+    var w = window.open();
+    w.document.write(s_html);
+    //w.close();
+} catch(e) {
+    var s_err = String(e.name) + "\nmessage:" + String(e.message);
+    s_err = (typeof(e.lineNumber)!="undefined") ? s_err + "\nline:" + String(e.lineNumber) : s_err;
+    alert("Error! " + s_err);
+}//end of catch
+});// end of a_full_screen click event
+
+window.setTimeout( function() {
+    var s_nada = ""; //alert("hello world");
+}, 300);
+var s = "nada"; // do_alert("hello world");
+
+} catch(e) {
+    var s_err = String(e.name) + "\nmessage:" + String(e.message);
+    s_err = (typeof(e.lineNumber)!="undefined") ? s_err + "\nline:" + String(e.lineNumber) : s_err;
+    alert("Error! " + s_err);
+}//end of catch
+
+});// end of secondary document ready
+</script>
+
+</div><!-- end of div.content -->
+</main>
+</body>
+</html>
