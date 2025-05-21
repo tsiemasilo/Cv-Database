@@ -196,7 +196,7 @@ ul.nav li a {
 }
 
 .data-table {
-  min-width: 100%;
+  min-width: 120%;
   width: max-content;
   border-collapse: collapse;
 }
