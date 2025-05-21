@@ -157,16 +157,22 @@ font-size: smaller;
 </div><!-- end of div_filter -->
 
 <h3>Records</h3>
-<div class="table-container">
-<table class="data-table" id="tbl_records">
+<div class="records-table-wrapper">
+<table class="records-table" id="tbl_records">
 <thead>
 <tr>
-<th>Surname</th><th>First name</th><th>Years experience</th><th>Contact number</th><th>E-mail</th><th>Qualifications</th><th style="font-size: smaller;">[actions]</th>
+<th>Surname</th>
+<th>First name</th>
+<th>Years experience</th>
+<th>Contact number</th>
+<th>E-mail</th>
+<th>Qualifications</th>
+<th class="action-cell">Actions</th>
 </tr>
 </thead>
 
 <tr>
-<td>chabane</td><td>Tsakanie</td><td>3</td><td>0000000</td><td>tsakani.chavani@alteram.co.za</td><td>
+<td>chabane</td><td>Tsakanie</td><td>3</td><td>0000000</td><td>tsakani.chavani@alteram.co.za</td><td class="qualification-cell">
 
 <ul>
 
@@ -177,7 +183,7 @@ Bachelor&#39;s degree, Advanced Diplomas, Post Graduate Certificates (NQF 7) - C
 </ul>
 
 </td>
-<td>
+<td class="action-cell">
 <ul>
 <li><a href="#15" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
 
@@ -188,7 +194,7 @@ Bachelor&#39;s degree, Advanced Diplomas, Post Graduate Certificates (NQF 7) - C
 </tr>
 
 <tr>
-<td>Chavani</td><td>Tsakani</td><td>6</td><td>0728165319</td><td>gertrudetsakani90@gmail.com</td><td>
+<td>Chavani</td><td>Tsakani</td><td>6</td><td>0728165319</td><td>gertrudetsakani90@gmail.com</td><td class="qualification-cell">
 
 <ul>
 
@@ -199,7 +205,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 </ul>
 
 </td>
-<td>
+<td class="action-cell">
 <ul>
 <li><a href="#13" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
 
@@ -210,7 +216,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 </tr>
 
 <tr>
-<td>Khwalo</td><td>Bongeka</td><td>8</td><td>00000000000</td><td>bongeka.khwalo@alteram.co.za</td><td>
+<td>Khwalo</td><td>Bongeka</td><td>8</td><td>00000000000</td><td>bongeka.khwalo@alteram.co.za</td><td class="qualification-cell">
 
 <ul>
 
@@ -221,7 +227,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 </ul>
 
 </td>
-<td>
+<td class="action-cell">
 <ul>
 <li><a href="#16" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
 
@@ -237,7 +243,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 &nbsp;
 
 </td>
-<td>
+<td class="action-cell">
 <ul>
 <li><a href="#14" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
 
@@ -253,7 +259,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 &nbsp;
 
 </td>
-<td>
+<td class="action-cell">
 <ul>
 <li><a href="#11" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
 
@@ -269,7 +275,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 &nbsp;
 
 </td>
-<td>
+<td class="action-cell">
 <ul>
 <li><a href="#12" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
 
@@ -280,7 +286,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 </tr>
 
 <tr>
-<td>Wilco</td><td>Roger</td><td>10</td><td>555-1234</td><td>roger@spacequest.com</td><td>
+<td>Wilco</td><td>Roger</td><td>10</td><td>555-1234</td><td>roger@spacequest.com</td><td class="qualification-cell">
 
 <ul>
 
@@ -295,7 +301,7 @@ Higher Certificates and Advanced National Vocational Certificate (NQF 5) - certi
 </ul>
 
 </td>
-<td>
+<td class="action-cell">
 <ul>
 <li><a href="#10" class="a_view_details"><img src="/static/cv_db/action_icons/view.svg" alt="view" aria-label="view" width="16"></a></li>
 
@@ -593,7 +599,7 @@ try {
 
 window.setTimeout( function() {
     var s_nada = ""; //alert("hello world");
-}, 300);
+}, 300);```html
 var s = "nada"; // do_alert("hello world");
 
 } catch(e) {
