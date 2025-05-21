@@ -142,13 +142,13 @@ ul.nav li a {
     min-height: calc(100vh - 100px);
     justify-content: center;
   }
-.content-container {
-  width: 120%;
+.content-container.content {
+  width: 200%;
+  max-width: 200%;
   margin: 2rem auto;
   padding: 0 2rem;
   overflow-x: auto;
   display: block;
-  max-width: 120%;
   position: relative;
 }
 
