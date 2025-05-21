@@ -224,8 +224,27 @@ ul.nav li a {
   padding: 8px;
   white-space: normal;
   word-wrap: break-word;
-  max-width: 300px;
-  min-width: 120px;
+  max-width: 400px;
+  min-width: 180px;
+  position: relative;
+}
+
+.data-table td::after {
+  content: '→';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 8px;
 }
 
 .data-table td:nth-child(6) {
