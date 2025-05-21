@@ -153,21 +153,41 @@ ul.nav li a {
 }
 
 .content-container::after {
-  content: '→';
+  content: '→ Content Scroll';
   position: absolute;
-  right: -20px;
+  right: -120px;
   top: 50%;
   transform: translateY(-50%);
-  width: 10px;
+  width: auto;
   height: 10px;
   background-color: #4CAF50;
-  border-radius: 50%;
+  border-radius: 15px;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  padding: 8px;
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+
+.table-container::after {
+  content: '→ Table Scroll';
+  position: absolute;
+  right: -120px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  height: 10px;
+  background-color: #4CAF50;
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 8px 12px;
+  white-space: nowrap;
 }
 
 .table-container {
