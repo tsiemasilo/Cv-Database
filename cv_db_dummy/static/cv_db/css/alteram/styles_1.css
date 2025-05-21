@@ -199,6 +199,25 @@ ul.nav li a {
   min-width: 120%;
   width: max-content;
   border-collapse: collapse;
+  position: relative;
+}
+
+.changed-element::after {
+  content: '→';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 8px;
 }
 
 .data-table td {
